@@ -88,19 +88,46 @@ public class ll {
     public int getSize() {
         return size;
     }
+    public void reverseIterate() {
+        if(head == null || head.next == null) {
+            return;
+        }
+        Node prevNode = head;
+        Node currNode = head.next;
+        while (currNode != null) {
+            Node nextNode = currNode.next;
+            currNode.next = prevNode;
+            //update
+            prevNode = currNode;
+            currNode = nextNode;
+        }
+        head.next = null;
+        head = prevNode;
+    }
+
+    public Node reverseRecursive(Node head) {
+        if(head == null || head.next == null) {
+            return head; 
+        }
+        Node newHead = reverseRecursive(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
+    }
 
     public static void main(String[] args) {
         ll list = new ll();
-        list.addFirst("a");
-        list.addFirst("is");
+        list.addLast("1");
+        list.addLast("2");
+        list.addLast("3");
+        list.addLast("4");
+        list.addLast("5");
+        list.addLast("6");
         list.printList();
-        list.addLast("list");
-        list.addFirst("this");
+        list.head = list.reverseRecursive(list.head);
         list.printList();
-        list.deleteFirst();
-        list.printList();
-        list.deleteLast();
-        list.printList();
-        System.out.println(list.getSize());
+        
+        
+        
     }
 }
