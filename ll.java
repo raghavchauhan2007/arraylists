@@ -115,6 +115,58 @@ public class ll {
         return newHead;
     }
 
+    public Node removeNth(Node head, int n) {
+        if(head.next == null) {
+            return null;
+        }
+        int size=0;
+        Node curr = head;
+        while (curr != null) {
+            curr = curr.next;
+            size++;
+        }
+        if(n == size) {
+            return head.next;
+        }
+        int index = size-n;
+        int i = 1;
+        Node prev = head;
+        while (i<index) {
+            prev = prev.next;
+            i++;
+        }
+        prev.next = prev.next.next;
+        return head;
+    }
+    public Node findMiddle(Node head) {
+        Node hare = head;
+        Node turtle = head;
+        while(hare.next != null && hare.next.next != null) {
+            hare = hare.next.next;
+            turtle = turtle.next;
+        }
+        return turtle;
+    }
+
+    public boolean isPalindrome(Node head) {
+        if(head == null || head.next == null) {
+            return true;
+        }
+
+        Node middle = findMiddle(head);
+        Node secondHead = reverseRecursive(middle.next);
+        Node firstHead = head;
+
+        while (secondHead != null) {
+            if(firstHead.data != secondHead.data) {
+                return false;
+            }
+            firstHead = firstHead.next;
+            secondHead = secondHead.next;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         ll list = new ll();
         list.addLast("1");
@@ -126,8 +178,14 @@ public class ll {
         list.printList();
         list.head = list.reverseRecursive(list.head);
         list.printList();
-        
-        
-        
+        list.removeNth(list.head, 2);
+        list.printList();
+        System.out.println(list.isPalindrome(list.head));
+
+        ll l = new ll();
+        l.addFirst("1");
+        l.addLast("2");
+        l.addLast("1");
+        System.out.println(l.isPalindrome(l.head));
     }
 }
